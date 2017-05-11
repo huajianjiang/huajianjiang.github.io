@@ -10,7 +10,7 @@
     
     <title>
         
-            位运算-字节的跳动 | 
+            位运算--字节的跳动 | 
         
         huajianjiang
     </title>
@@ -58,7 +58,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="位运算-字节的跳动 | huajianjiang">
+    <meta property="og:title" content="位运算--字节的跳动 | huajianjiang">
     <meta property="og:description" content="Happy Android developer">
     <meta property="og:article:tag" content="计算机基础"> <meta property="og:article:tag" content="位运算"> 
 
@@ -247,7 +247,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#位运算实际应用场景"><span class="post-toc-number">1.</span> <span class="post-toc-text">位运算实际应用场景</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#以-Android-中的-ExpandableListView-为例："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">以 Android 中的 ExpandableListView 为例：</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#打包过程，以-child-为例"><span class="post-toc-number">2.</span> <span class="post-toc-text">打包过程，以 child 为例</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解包过程-以上例为例"><span class="post-toc-number">3.</span> <span class="post-toc-text">解包过程,以上例为例</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -284,7 +284,7 @@
         
     
             <p class="article-headline-p">
-                位运算-字节的跳动
+                位运算--字节的跳动
             </p>
         </div>
 
@@ -352,7 +352,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=位运算-字节的跳动&url=http://yoursite.com//2017/05/09/位运算/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=位运算--字节的跳动&url=http://yoursite.com//2017/05/09/位运算/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -361,7 +361,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=位运算-字节的跳动&url=http://yoursite.com//2017/05/09/位运算/index.html&via=Huajian Jiang" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=位运算--字节的跳动&url=http://yoursite.com//2017/05/09/位运算/index.html&via=Huajian Jiang" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -391,7 +391,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=huajianjiang&title=位运算-字节的跳动&summary=Happy Android developer&pics=http://yoursite.com/img/favicon.png&url=http://yoursite.com/2017/05/09/位运算/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=huajianjiang&title=位运算--字节的跳动&summary=Happy Android developer&pics=http://yoursite.com/img/favicon.png&url=http://yoursite.com/2017/05/09/位运算/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -409,140 +409,112 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>##位运算实际应用<br>以 Android 中的 ExpandableListView 为例：</p>
-<pre><code> /**
- * The packed position represents a group.
- * 最高位存储类型(Group/child)信息，这里是代表 Group 类型，也就是 Group 类型打
- * 包后的 packagedPosition 值始终是正整数
- */
-public static final int PACKED_POSITION_TYPE_GROUP = 0;
-
-/**
- * The packed position represents a child.
- * 最高位存储类型(Group/child)信息，这里是代表 child 类型，child 类型所打包后的 
- * packagedPosition 始终是负整数
- */
-public static final int PACKED_POSITION_TYPE_CHILD = 1;
-
-/**
- * The packed position represents a neither/null/no preference.
- * 这里的值所代表无法确认的(非法的)类型信息,这个值既不代表 null 也不代表 空 的类型
- */
-public static final int PACKED_POSITION_TYPE_NULL = 2;
-
-/**
- * The value for a packed position that represents neither/null/no
- * preference. This value is not otherwise possible since a group type
- * (first bit 0) should not have a child position filled.
- * 该数值代表 Group/child 打包后的位置信息是无法确认的(非法的)，这个值是不可能存 
- * 在的，除非在打包 Group 位置信息的时候存储了 child 位置信息
- */
-public static final long PACKED_POSITION_VALUE_NULL = 0x00000000FFFFFFFFL;
-
-/** The mask (in packed position representation) for the child */
-/** 用于在打包 child 信息的时候所使用的 child 掩码，用来遮盖(位保留)和揭露(弃位) child 的位置信息，这里由于 child 的 type 位是 0，也就是 packageosition 最高位 是0， 计算出的 packagePosition 始终为负整数，child 的位置信息存储在低 32 位，这里的掩码是设计就是为了 遮盖和揭露作用的 */
-private static final long PACKED_POSITION_MASK_CHILD = 0x00000000FFFFFFFFL;
-
-/** The mask (in packed position representation) for the group */
-private static final long PACKED_POSITION_MASK_GROUP = 0x7FFFFFFF00000000L;
-
-/** The mask (in packed position representation) for the type */
-private static final long PACKED_POSITION_MASK_TYPE  = 0x8000000000000000L;
-
-/** The shift amount (in packed position representation) for the group */
-private static final long PACKED_POSITION_SHIFT_GROUP = 32;
-
-/** The shift amount (in packed position representation) for the type */
-private static final long PACKED_POSITION_SHIFT_TYPE  = 63;
-
-/** The mask (in integer child position representation) for the child */
-private static final long PACKED_POSITION_INT_MASK_CHILD = 0xFFFFFFFF;
-
-/** The mask (in integer group position representation) for the group */
-private static final long PACKED_POSITION_INT_MASK_GROUP = 0x7FFFFFFF;
-
-打包过程，以 child 为例    
-
-/**
- * 该方法是对 child 进行信息编码, 利用 位运算 计算出一个包含 type 、 gorup 
- * position 、 child position 3个信息的 packagedPosition，日后可以利用该打包后
- * 的信息值去解码出 type 、 group position 、 child position 信息
- * &lt;p&gt; 1.首先 type 是存储在最高位，也就是位索引值是第 63 位.
- *       2.group position 信息存储在高 31 位，最高位被 type 位占用
- *       3.child position 信息存储在低 32 位
- *    之所以用 64 位的 long 类型去存储是因为需要最大化的存储 group/child position * 信息；
- * &lt;p&gt; 这里的使用 | 或 位运算符来将 3个 不同位信息进行拼接存储得到最终的 
- * packagedPosition.
- * 
- * eg: groupPosition = 6, childPosition = 3 , 打包后的值是 1000 0000 0000 0000 0000 0000 0000 0110 0000 0000 0000 0000 0000 0000 0000 0011     十六进制: 0x8000000600000003
- */    
-public static long getPackedPositionForChild(int groupPosition, int childPosition) {
-    return (((long)PACKED_POSITION_TYPE_CHILD) &lt;&lt; PACKED_POSITION_SHIFT_TYPE)
-            | ((((long)groupPosition) &amp; PACKED_POSITION_INT_MASK_GROUP)
-                    &lt;&lt; PACKED_POSITION_SHIFT_GROUP)
-            | (childPosition &amp; PACKED_POSITION_INT_MASK_CHILD);  
-}
-
-再来看解包过程:
-
-1. 解包 type 信息
-/**
+        <h2 id="位运算实际应用场景"><a href="#位运算实际应用场景" class="headerlink" title="位运算实际应用场景"></a>位运算实际应用场景</h2><h3 id="以-Android-中的-ExpandableListView-为例："><a href="#以-Android-中的-ExpandableListView-为例：" class="headerlink" title="以 Android 中的 ExpandableListView 为例："></a>以 <code>Android</code> 中的 <code>ExpandableListView</code> 为例：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * The packed position represents a group.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PACKED_POSITION_TYPE_GROUP = <span class="number">0</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>代表 一个 <code>group</code> 类型的打包后的位置信息,该位存储在最高位 <code>64</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> *   The packed position represents a child.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PACKED_POSITION_TYPE_CHILD = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>代表一个为 <code>child</code> 类型的打包后的位置信息,该位存储在最高位 <code>64</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * The packed position represents a neither/null/no preference.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PACKED_POSITION_TYPE_NULL = <span class="number">2</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>代表一个无法确认的(非法的) <code>type</code> 的打包后的位置信息,该信息既不代表  <code>null</code> 也不代表没有设置</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * The value for a packed position that represents neither/null/no</div><div class="line">  * preference. This value is not otherwise possible since a group type</div><div class="line">  * (first bit 0) should not have a child position filled.</div><div class="line">  */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_VALUE_NULL = <span class="number">0x00000000FFFFFFFFL</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>该数值代表 <code>Group/child</code> 打包后的位置信息是无法确认的(非法的)，这个值是不可能存在的，除非在打包 <code>Group</code> 位置信息的时候存储了 <code>child</code> 位置信息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/** The mask (in packed position representation) for the child */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_MASK_CHILD = <span class="number">0x00000000FFFFFFFFL</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>用于解包 <code>child</code> 位置信息时所使用的 <code>child</code> 掩码，<code>child</code> 的位置信息存储在低 <code>32</code> 位</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/** The mask (in packed position representation) for the group */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_MASK_GROUP = <span class="number">0x7FFFFFFF00000000L</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>用于解包 <code>group</code> 位置信息时所使用的 <code>group</code> 掩码，<code>group</code> 的位置信息存储在高 <code>31</code> 位</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/** The mask (in packed position representation) for the type */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_MASK_TYPE  = <span class="number">0x8000000000000000L</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>用于<strong>解包</strong> <code>packagedPosition</code> 中的 <code>type</code> 位的 <code>type</code> 掩码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/** The shift amount (in packed position representation) for the group */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_SHIFT_GROUP = <span class="number">32</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>用于<strong>解包</strong> <code>packagedPosition</code> 中的 <code>group</code> 位的 <code>group</code> 掩码，可以得出 <code>group</code> 的原始位置信息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/** The shift amount (in packed position representation) for the type */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_SHIFT_TYPE  = <span class="number">63</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>用于在打包位置信息的时候打包 <code>type</code> 位信息，<code>type</code> 位存储在最高位，这个是移位的个数 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/** The mask (in integer child position representation) for the child */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_INT_MASK_CHILD = <span class="number">0xFFFFFFFF</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>用于在<strong>打包</strong> <code>child</code> 位置信息时的掩码，<code>child</code> 位置信息存储在低 <code>32</code> 位</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/** The mask (in integer group position representation) for the group */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PACKED_POSITION_INT_MASK_GROUP = <span class="number">0x7FFFFFFF</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>用于在<strong>打包</strong> <code>group</code> 位置信息时的掩码，<code>group</code> 位置信息存储在高 <code>31</code> 位</li>
+</ul>
+<h2 id="打包过程，以-child-为例"><a href="#打包过程，以-child-为例" class="headerlink" title="打包过程，以 child 为例"></a>打包过程，以 <code>child</code> 为例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* 该方法是对 child 进行信息编码, 利用 位运算 计算出一个包含 type 、 gorup </div><div class="line">* position 、 child position 3个信息的 packagedPosition，日后可以利用该打包后</div><div class="line">* 的信息值去解码出 type 、 group position 、 child position 信息</div><div class="line">* &lt;p&gt; </div><div class="line">*    &lt;li&gt;首先 type 是存储在最高位，也就是位索引值是 63</div><div class="line">*	 &lt;li&gt;group position 信息存储在高 31 位，最高位被 type 位占用</div><div class="line">*	 &lt;li&gt;child position 信息存储在低 32 位</div><div class="line">*	之所以用 64 位的 long 类型去存储是因为需要最大化的存储 group/child position 信</div><div class="line">* 息</div><div class="line">* &lt;p&gt; 这里的使用 | 位运算符来将 3个 不同位信息进行拼接存储得到最终的 packagedPosition.</div><div class="line">* 例如: groupPosition = 6, childPosition = 3 , 打包后的值是 1000 0000 0000 0000 *0000 0000 0000 0110 0000 0000 0000 0000 0000 0000 0000 0011 	十六进制: *0x8000000600000003</div><div class="line">*/    </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getPackedPositionForChild</span><span class="params">(<span class="keyword">int</span> groupPosition, <span class="keyword">int</span> childPosition)</span> </span>&#123;</div><div class="line"><span class="keyword">return</span> (((<span class="keyword">long</span>)PACKED_POSITION_TYPE_CHILD) &lt;&lt; PACKED_POSITION_SHIFT_TYPE)</div><div class="line">                | ((((<span class="keyword">long</span>)groupPosition) &amp; PACKED_POSITION_INT_MASK_GROUP)</div><div class="line">                        &lt;&lt; PACKED_POSITION_SHIFT_GROUP)</div><div class="line">                | (childPosition &amp; PACKED_POSITION_INT_MASK_CHILD);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="解包过程-以上例为例"><a href="#解包过程-以上例为例" class="headerlink" title="解包过程,以上例为例"></a>解包过程,以上例为例</h2><pre><code class="java">
+* 解包 type 信息
+<span class="comment">/**
  * type mask = 0x8000000000000000L
  * 上面的打包后的 十六进制 long 型的 packagedPosition =  0x8000000600000003L
- * 这里 type mask &amp; packagedPosition 也就是 0x8000000000000000 &amp; 
- * 0x8000000600000003 解包出最高位 type 信息，结果是 1，所以是 child 类型
- * 其实 这个 &amp; 位操作就是检查是否 type 位是否是 child 类型，之所以定义 type 
- * mask 是 0x8000000000000000L ，是为了取最高位 type 信息，其他的位舍弃
- *
- */
-public static int getPackedPositionType(long packedPosition) {
-    if (packedPosition == PACKED_POSITION_VALUE_NULL) {
-        return PACKED_POSITION_TYPE_NULL;
-    }
+* 这里 type mask &amp; packagedPosition 也就是 0x8000000000000000 &amp; 
+* 0x8000000600000003 解包出最高位 type 信息，结果是 1，所以是 child 类型
+* 其实 这个 &amp; 位操作就是检查是否 type 位是否是 child 类型，之所以定义 type 
+* mask 是 0x8000000000000000L ，是为了取最高位 type 信息，其他的位舍弃
+*
+*/</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPackedPositionType</span><span class="params">(<span class="keyword">long</span> packedPosition)</span> </span>{
+        <span class="keyword">if</span> (packedPosition == PACKED_POSITION_VALUE_NULL) {
+            <span class="keyword">return</span> PACKED_POSITION_TYPE_NULL;
+        }
 
-    return (packedPosition &amp; PACKED_POSITION_MASK_TYPE) == PACKED_POSITION_MASK_TYPE
-            ? PACKED_POSITION_TYPE_CHILD
-            : PACKED_POSITION_TYPE_GROUP;
+        <span class="keyword">return</span> (packedPosition &amp; PACKED_POSITION_MASK_TYPE) == PACKED_POSITION_MASK_TYPE
+                ? PACKED_POSITION_TYPE_CHILD
+                : PACKED_POSITION_TYPE_GROUP;
 }
 
-2. 解包 group position 信息
-/**
+* 解包 `group position` 信息
+<span class="comment">/**
  * 这里是解包 group position 位得到 group position 
  * 其实是对打包的 packedPosition 进行解码 ，利用 MASK_GROUP 掩码来 &amp; 
  * packedPosition 得到纯粹的 group position 位信息，然后再向右移动 32 位到低 
- * 32 位得带最终的 group position
+ * 32 位得到最终的 group position
  *  packagedPosition =  0x8000000600000003L
- */
-public static int getPackedPositionGroup(long packedPosition) {
-    // Null
-    if (packedPosition == PACKED_POSITION_VALUE_NULL) return -1;
+ */</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPackedPositionGroup</span><span class="params">(<span class="keyword">long</span> packedPosition)</span> </span>{
+    <span class="comment">// Null</span>
+    <span class="keyword">if</span> (packedPosition == PACKED_POSITION_VALUE_NULL) <span class="keyword">return</span> -<span class="number">1</span>;
 
-    return (int) ((packedPosition &amp; PACKED_POSITION_MASK_GROUP) &gt;&gt; PACKED_POSITION_SHIFT_GROUP);
-}
-3. 解包 child position 信息
-/**
- * 这里先事先 获取 type 信息判断是否是 child 类型，如果是的话再 解码 
- * packedPosition 编码里的 child position 信息
- */
-public static int getPackedPositionChild(long packedPosition) {
-    // Null
-    if (packedPosition == PACKED_POSITION_VALUE_NULL) return -1;
-
-    // Group since a group type clears this bit
-    if ((packedPosition &amp; PACKED_POSITION_MASK_TYPE) != PACKED_POSITION_MASK_TYPE) return -1;
-
-    return (int) (packedPosition &amp; PACKED_POSITION_MASK_CHILD);
+        <span class="keyword">return</span> (<span class="keyword">int</span>) ((packedPosition &amp; PACKED_POSITION_MASK_GROUP) &gt;&gt; PACKED_POSITION_SHIFT_GROUP);
 }
 
-   还有，看下 如何编码 group 类型的信息的
+* 解包 `child position` 信息
+    <span class="comment">/**
+     * 这里先事先 获取 type 信息判断是否是 child 类型，如果是的话再 解码 
+     * packedPosition 编码里的 child position 信息
+     */</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPackedPositionChild</span><span class="params">(<span class="keyword">long</span> packedPosition)</span> </span>{
+        <span class="comment">// Null</span>
+        <span class="keyword">if</span> (packedPosition == PACKED_POSITION_VALUE_NULL) <span class="keyword">return</span> -<span class="number">1</span>;
 
-   public static long getPackedPositionForGroup(int groupPosition) {
-    // No need to OR a type in because PACKED_POSITION_GROUP == 0
-    // 这句话的意思就是: 没有必要再 添加 group 位信息，因为 group type = 0
-    return ((((long)groupPosition) &amp; PACKED_POSITION_INT_MASK_GROUP)
-                    &lt;&lt; PACKED_POSITION_SHIFT_GROUP); 
-} 
+        <span class="comment">// Group since a group type clears this bit</span>
+        <span class="keyword">if</span> ((packedPosition &amp; PACKED_POSITION_MASK_TYPE) != PACKED_POSITION_MASK_TYPE) <span class="keyword">return</span> -<span class="number">1</span>;
+
+        <span class="keyword">return</span> (<span class="keyword">int</span>) (packedPosition &amp; PACKED_POSITION_MASK_CHILD);
+    }
+
+* 如何编码 `group` 类型的信息的
+
+       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getPackedPositionForGroup</span><span class="params">(<span class="keyword">int</span> groupPosition)</span> </span>{
+        <span class="comment">// No need to OR a type in because PACKED_POSITION_GROUP == 0</span>
+        <span class="comment">// 这句话的意思就是: 没有必要再 添加 group type 位信息，因为 group type = 0</span>
+        <span class="keyword">return</span> ((((<span class="keyword">long</span>)groupPosition) &amp; PACKED_POSITION_INT_MASK_GROUP)
+                        &lt;&lt; PACKED_POSITION_SHIFT_GROUP); 
+    }
 </code></pre>
+
     
 
     

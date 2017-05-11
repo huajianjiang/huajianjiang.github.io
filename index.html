@@ -382,43 +382,15 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/05/09/位运算/">位运算-字节的跳动</a></p>
+        <p class="article-headline-p"><a href="/2017/05/09/位运算/">位运算--字节的跳动</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            ##位运算实际应用以 Android 中的 ExpandableListView 为例：
- /**
- * The packed position represents a group.
- * 最高位存储类型(Group/child)信息，这里是代表 Group 类型，也就是 Group 类型打
- * 包后的 packagedPosition 值始终是正整数
- */
-public static final int PACKED_POSITION_TYPE_GROUP = 0;
+            位运算实际应用场景以 Android 中的 ExpandableListView 为例：12345/** * The packed position represents a group. */public static final int PACKED_POSITION_TYPE_GROUP = 0;
 
-/**
- * The packed position represents a child.
- * 最高位存储类型(Group/child)信息，这里是代表 child 类型，child 类型所打包后的 
- * packagedPosition 始终是负整数
- */
-public static final int PACKED_POSITION_TYPE_CHILD = 1;
-
-/**
- * The packed position represents a neither/null/no preference.
- * 这里的值所代表无法确认的(非法的)类型信息,这个值既不代表 null 也不代表 空 的类型
- */
-public static final int PACKED_POSITION_TYPE_NULL = 2;
-
-/**
- * The value for a packed position that represents neither/null/no
- * preference. This value is not otherwise possible since a group type
- * (first bit 0) should not have a child position filled.
- * 该数值代表 Group/child 打包后的位置信息是无法确认的(非法的)，这个值是不可能存 
- * 在的，除非在打包 Group 位置信息的时候存储了 child 位置信息
- */
-public static final long PACKED_POSITION_VALUE_NULL = 0x00000000FFFFFFFFL;
-
-/** The mask (in pa...
+代表 一个 group 类型的打包后的位置信息,该...
         
         &nbsp;&nbsp;&nbsp;
         <span>
